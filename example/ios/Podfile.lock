@@ -1,0 +1,49 @@
+PODS:
+  - Alamofire (5.0.5)
+  - Flutter (1.0.0)
+  - HandyJSON (5.0.2)
+  - JGProgressHUD (2.1)
+  - MBDocCapture (0.1.4)
+  - Toast-Swift (5.0.1)
+  - tu_identidad (0.0.1):
+    - Flutter
+    - TuIdentidadSDK (~> 1.1.4)
+  - TuIdentidadSDK (1.1.4):
+    - Alamofire (~> 5.0.0-rc.3)
+    - HandyJSON (~> 5.0.1)
+    - JGProgressHUD
+    - MBDocCapture (~> 0.1.4)
+    - Toast-Swift (~> 5.0.0)
+
+DEPENDENCIES:
+  - Flutter (from `Flutter`)
+  - tu_identidad (from `.symlinks/plugins/tu_identidad/ios`)
+
+SPEC REPOS:
+  trunk:
+    - Alamofire
+    - HandyJSON
+    - JGProgressHUD
+    - MBDocCapture
+    - Toast-Swift
+    - TuIdentidadSDK
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: Flutter
+  tu_identidad:
+    :path: ".symlinks/plugins/tu_identidad/ios"
+
+SPEC CHECKSUMS:
+  Alamofire: df2f8f826963b08b9a870791ad48e07a10090b2e
+  Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
+  HandyJSON: 9e4e236f5d2dbefad5155a77417bbea438201c03
+  JGProgressHUD: aa403e9a5b45cae98903c4600cccdd98c0c3ec90
+  MBDocCapture: 08165ce6f820559fd0280976c27a7e77d44f9760
+  Toast-Swift: 9b6a70f28b3bf0b96c40d46c0c4b9d6639846711
+  tu_identidad: 8dbc62fced55b785acf848e9968d4afffa3a1ecc
+  TuIdentidadSDK: 1318ee15db5eb86e8ee42a0f67b76bfcf984f767
+
+PODFILE CHECKSUM: f42fa49cdc7143f680653cf40c5c794811f22c46
+
+COCOAPODS: 1.9.3
