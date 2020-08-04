@@ -13,11 +13,12 @@ A new Flutter plugin.
   s.license          = { :file => '../LICENSE' }
   s.author           = { 'Your Company' => 'email@example.com' }
   s.source           = { :path => '.' }
-
+  s.source           = { :branch => 'develop', :git => 'https://github.com/tu-identidad/tu-identidad-ios-sdk.git'}
   s.source_files = 'Classes/**/*'
 
   s.dependency 'Flutter'
   s.dependency 'TuIdentidadSDK', '~>1.1.4'
+
   s.ios.deployment_target = '10.0'
   s.platform = :ios, '10.0'
   s.swift_version = '5.0'

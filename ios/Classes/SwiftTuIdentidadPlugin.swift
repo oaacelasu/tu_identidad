@@ -2,7 +2,7 @@ import Flutter
 import UIKit
 import TuIdentidadSDK
 
-public class SwiftTuIdentidadPlugin: NSObject, FlutterPlugin, IDValidationDelegate{
+public class SwiftTuIdentidadPlugin: NSObject, FlutterPlugin, IDValidationDelegate, IDAddressDocumentDelegate{
     var _controller : UIViewController
     var _result: FlutterResult?
 
@@ -30,14 +30,16 @@ public class SwiftTuIdentidadPlugin: NSObject, FlutterPlugin, IDValidationDelega
                     _result = nil;
                 }
         switch call.method {
-        case "init":
-            handleInit(call: call, result: result)
+        case "ine":
+            handleIne(call: call, result: result)
+        case "address":
+            handleAddress(call: call, result: result)
         default:
             result(FlutterMethodNotImplemented)
         }
     }
     
-    private func handleInit(call: FlutterMethodCall, result: @escaping FlutterResult) {
+    private func handleIne(call: FlutterMethodCall, result: @escaping FlutterResult) {
         _result = result
         let arguments: Dictionary<String, Any> = call.arguments as! Dictionary
         
@@ -64,6 +66,17 @@ public class SwiftTuIdentidadPlugin: NSObject, FlutterPlugin, IDValidationDelega
         showResults: showResults, validateOptions: IDValidateOptions(checkInfo: INEValidationInfo, checkQuality: INEValidationQuality,
         checkPatterns: INEValidationPatterns, checkCurp: INEValidationCurp))
     }
+    private func handleAddress(call: FlutterMethodCall, result: @escaping FlutterResult) {
+        _result = result
+        let arguments: Dictionary<String, Any> = call.arguments as! Dictionary
+        
+        let apiKey: String = arguments["apiKey"] as! String
+
+        let idAddressViewController = IDAddressViewController()
+        idAddressViewController.delegate = self
+        idAddressViewController.apiKey = apiKey
+        _controller.present(idAddressViewController, animated: true, completion: nil)
+    }
     
     public func getData(data: IDValidation) {
         _result!(data)
@@ -75,6 +88,15 @@ public class SwiftTuIdentidadPlugin: NSObject, FlutterPlugin, IDValidationDelega
     
     public func error(response: String) {
         _result!(response)
+    }
+    
+    public func addressDocumentController(controller: IDAddressViewController, didFinishWithResponse response:
+    IDAddressDocumentResponse, andImage image: UIImage) {
+        _result!(["valid": response.valid, "data": response.data])
+    }
+    public func addressDocumentController(controller: IDAddressViewController, didFinishWithError error:
+    IDErrorResponse, andImage image: UIImage) {
+        _result!(["message": error.message, "code": error.code])
     }
     
 }

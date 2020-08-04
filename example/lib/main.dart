@@ -20,8 +20,7 @@ class _MyAppState extends State<MyApp> {
         ),
         body: Center(
           child: RaisedButton(
-            onPressed: () async =>
-                await TuIdentidad.init("", TuIdentidad.IDVAL),
+            onPressed: () async => await TuIdentidad.ine("", TuIdentidad.INE),
             child: Text('Launch Doc'),
           ),
         ),

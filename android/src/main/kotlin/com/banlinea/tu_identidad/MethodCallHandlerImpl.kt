@@ -2,22 +2,21 @@ package com.banlinea.tu_identidad
 
 import android.app.Activity.RESULT_OK
 import android.content.Intent
-import android.graphics.Bitmap
 import android.net.Uri
-import android.provider.MediaStore
 import androidx.annotation.NonNull
 import androidx.annotation.Nullable
 import com.tuid.idval.Models.method
 import com.tuid.idval.TuID.init
 import com.tuid.idval.TuID.INEValidation
 import com.tuid.idval.TuID.AUTHID_ACTIVITY_RESULT
+import com.tuidentidad.address_sdk.AddressDocumentActivity
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.PluginRegistry.ActivityResultListener
-import java.io.IOException
 import java.util.*
 
+const val MY_SCAN_REQUEST_CODE = 100
 
 class MethodCallHandlerImpl: MethodChannel.MethodCallHandler , ActivityResultListener{
 
@@ -31,14 +30,15 @@ class MethodCallHandlerImpl: MethodChannel.MethodCallHandler , ActivityResultLis
 
     override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: MethodChannel.Result) {
         when (call.method) {
-            "init" -> handleInit(call, result)
+            "ine" -> handleIne(call, result)
+            "address" -> handleAddress(call, result)
             else -> {
                 result.notImplemented()
             }
         }
     }
 
-    private fun handleInit(call: MethodCall, result: MethodChannel.Result) {
+    private fun handleIne(call: MethodCall, result: MethodChannel.Result) {
         mResult = result
         mActivityPluginBinding.addActivityResultListener(this)
 
@@ -89,6 +89,21 @@ class MethodCallHandlerImpl: MethodChannel.MethodCallHandler , ActivityResultLis
         init(mActivityPluginBinding.activity, showTutorial, showResults, apiKey, INEMethod, INEValidation(INEValidationInfo, INEValidationQuality, INEValidationPatterns, INEValidationCurp))
     }
 
+    private fun handleAddress(call: MethodCall, result: MethodChannel.Result) {
+        mResult = result
+        mActivityPluginBinding.addActivityResultListener(this)
+
+        var apiKey = ""
+        if (call.hasArgument("apiKey")) {
+            apiKey = call.argument("apiKey")?:""
+        }
+        val scanIntent = Intent(mActivityPluginBinding.activity, AddressDocumentActivity::class.java)
+
+
+        scanIntent.putExtra("ApiKey", apiKey)
+        mActivityPluginBinding.activity.startActivityForResult(scanIntent,MY_SCAN_REQUEST_CODE);
+
+    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?): Boolean {
         if (requestCode == AUTHID_ACTIVITY_RESULT) {
@@ -104,6 +119,21 @@ class MethodCallHandlerImpl: MethodChannel.MethodCallHandler , ActivityResultLis
                 mResult!!.success(result)
                 true
             }else{
+                mResult!!.success(null)
+                false
+            }
+        } else if(requestCode == MY_SCAN_REQUEST_CODE) {
+            return if (resultCode == RESULT_OK) {
+                val result: MutableMap<String, Any?> = HashMap()
+                val extras = data!!.extras!!
+                result["status"] = extras.getBoolean("status")
+                result["response"] = extras.getString("response")
+                result["error"] = extras.getString("errorData")
+                result["frontCFEPath"] = (extras.getParcelable("cfeimgPath") as Uri).toString()
+
+                mResult!!.success(result)
+                true
+            } else {
                 mResult!!.success(null)
                 false
             }

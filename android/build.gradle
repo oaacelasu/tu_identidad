@@ -10,7 +10,10 @@ buildscript {
             url 'https://jitpack.io'
         }
         maven {
-            url 'https://pkgs.dev.azure.com/tu-identidad/TuIdentidad-AndroidSDK/_packaging/INE-SDK/maven/v1'
+            url 'https://pkgs.dev.azure.com/tu-identidad/TuIdentidad-Android-SDK/_packaging/INE-SDK/maven/v1'
+        }
+        maven {
+            url 'https://pkgs.dev.azure.com/tu-identidad/TuIdentidad-Android-SDK/_packaging/Address-SDK/maven/v1'
         }
     }
 
@@ -30,6 +33,9 @@ rootProject.allprojects {
         }
         maven {
             url 'https://pkgs.dev.azure.com/tu-identidad/TuIdentidad-Android-SDK/_packaging/INE-SDK/maven/v1'
+        }
+        maven {
+            url 'https://pkgs.dev.azure.com/tu-identidad/TuIdentidad-Android-SDK/_packaging/Address-SDK/maven/v1'
         }
     }
 }
@@ -54,4 +60,5 @@ android {
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.tuidentidad.ine:idval:1.10.7'
+    implementation 'com.tuidentidad.sdk:TuIDAddressKit:0.0.10'
 }

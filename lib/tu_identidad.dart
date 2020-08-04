@@ -9,7 +9,7 @@ class TuIdentidad {
 
   static const MethodChannel _channel = const MethodChannel('tu_identidad');
 
-  static Future<dynamic> init(
+  static Future<dynamic> ine(
     String apiKey,
     String method, {
     bool showTutorial = false,
@@ -29,7 +29,17 @@ class TuIdentidad {
       "INEValidationPatterns": INEValidationPatterns ?? true,
       "INEValidationCurp": INEValidationCurp ?? true,
     };
-    final result = await _channel.invokeMethod('init', args);
+    final result = await _channel.invokeMethod('ine', args);
+    return result;
+  }
+
+  static Future<dynamic> address(
+    String apiKey,
+  ) async {
+    final Map<String, dynamic> args = {
+      "apiKey": apiKey ?? "",
+    };
+    final result = await _channel.invokeMethod('address', args);
     return result;
   }
 }
