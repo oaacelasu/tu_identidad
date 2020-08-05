@@ -92,10 +92,12 @@ public class SwiftTuIdentidadPlugin: NSObject, FlutterPlugin, IDValidationDelega
     
     public func addressDocumentController(controller: IDAddressViewController, didFinishWithResponse response:
     IDAddressDocumentResponse, andImage image: UIImage) {
+        controller.dismiss(animated: true, completion: nil)
         _result!(["valid": response.valid, "data": response.data])
     }
     public func addressDocumentController(controller: IDAddressViewController, didFinishWithError error:
     IDErrorResponse, andImage image: UIImage) {
+        controller.dismiss(animated: true, completion: nil)
         _result!(["message": error.message, "code": error.code])
     }
     
